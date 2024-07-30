@@ -39,7 +39,7 @@ async def setup_command(ctx):
                 for _ in range(60):
                     await new_channel.send(message_content)
         
-        await ctx.send("Setup finish ;)")
+        await ctx.send("command executed ;)")
     else:
         await ctx.send("You don't have the required permissions.")
 
