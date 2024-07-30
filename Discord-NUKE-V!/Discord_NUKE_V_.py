@@ -33,7 +33,7 @@ async def setup_command(ctx):
 
         category = await guild.create_category(category_name)
 
-        for i in range(1, 121):
+        for i in range(1, 35):
             new_channel = await category.create_text_channel(f"{channel_name}")
             if isinstance(new_channel, discord.TextChannel):  
                 for _ in range(60):
