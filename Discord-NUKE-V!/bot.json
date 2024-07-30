@@ -1,5 +1,6 @@
 {
-  "bot_token": "TOKEN",
+  "bot_token": "YOUR_BOT_TOKEN",
+  "command_name": "nuke",
   "channel_name": "gg",
   "category_name": "Report",
   "message_content": "HELLO I'M HERE"
