@@ -2,11 +2,10 @@ import discord
 from discord.ext import commands
 import json
 
-# Load configuration from bot.json
 with open('bot.json', 'r') as f:
     data = json.load(f)
     bot_token = data.get('bot_token')
-    command_name = data.get('command_name', 'setup')  # Get the command name from the json file
+    command_name = data.get('command_name', 'setup') 
 
 intents = discord.Intents.all()
 intents.guilds = True
@@ -45,7 +44,6 @@ async def setup_command(ctx):
 
             num_categories += 1
 
-            # Break the loop if the total number of channels exceeds 300
             total_channels = num_channels_per_category * num_categories
             if total_channels >= 300:
                 break
@@ -54,7 +52,6 @@ async def setup_command(ctx):
     else:
         await ctx.send("You don't have the required permissions.")
 
-# Dynamically add the setup command with the name specified in the json file
 bot.command(name=command_name)(setup_command)
 
 bot.run(bot_token)
